@@ -12,6 +12,10 @@ public class FileUpdater {
     // Path to data file
     protected static Path p = Paths.get("src", "data.txt");
 
+    // Scanner input
+    protected static Scanner input = new Scanner(System.in);
+
+
     // Read datafile return List
     protected static List<String> readData() {
         List<String> lines = new ArrayList<>();
@@ -27,15 +31,18 @@ public class FileUpdater {
 
     protected static void addNewContact(){
         List<String> lines = readData();
-        Scanner input = new Scanner(System.in);
+
         System.out.println("Add contacts first and last name.");
         String newName = input.nextLine();
-        System.out.format("What is %s's phone number?", newName);
+
+        System.out.format("What is %s's phone number?\n", newName);
         String userInput = input.nextLine();
+
         String formattedContact = "";
-        int phoneNumber = 0;
+        long phoneNumber = 0;
+
         if(userInput.matches(".*\\d.*")){
-            phoneNumber = Integer.parseInt(userInput);
+            phoneNumber = Long.parseLong(userInput);
         } else {
             System.out.println("That isn't a phone number");
             UserInterface.menu();
@@ -54,6 +61,54 @@ public class FileUpdater {
             Files.write(p, lines);
         } catch (IOException e){
             e.printStackTrace();
+        }
+
+    }
+
+
+    // Deletes contact
+    protected static void deleteContact() {
+        System.out.println("Enter contact's name to be deleted");
+        String fullName = input.nextLine();
+
+        List<String> lines = FileUpdater.readData();
+        List<String> newList = new ArrayList<String>();
+
+        System.out.println("\nName                 | Phone Number ");
+        System.out.println("-----------------------------------");
+
+        for(String l : lines){
+            if(l.toLowerCase().contains(fullName.toLowerCase())){
+                System.out.println(l);
+            }
+        }
+
+        System.out.println("\nAre you sure you want to delete this contact? ");
+        String confirm = input.nextLine();
+
+        if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
+            for(String l : lines){
+                if(l.toLowerCase().contains(fullName.toLowerCase())){
+                    continue;
+                }
+                newList.add(l);
+            }
+
+            try{
+                Files.write(p, newList);
+            } catch (IOException e){
+                e.printStackTrace();
+            } finally {
+                UserInterface.viewContacts();
+            }
+        } else {
+            System.out.println("Do you want to search for another user to delete? ");
+
+            confirm = input.nextLine();
+
+            if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
+                deleteContact();
+            }
         }
 
     }

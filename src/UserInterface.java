@@ -1,4 +1,7 @@
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,8 +33,8 @@ public class UserInterface {
             } else {
                 System.out.println("That isn't a valid choice.");
                 menu();
+                return;
             }
-
 
             // Perform action based on choice
             switch (choice) {
@@ -45,19 +48,17 @@ public class UserInterface {
                     searchContacts();
                     break;
                 case 4:
-                    System.out.println("Delete an existing contact");
+                    FileUpdater.deleteContact();
                     break;
                 case 5:
                     System.out.println("Goodbye !");
                     menuContinue = false;
                     break;
                 default:
-                    System.out.println("Invalid menu choice: " + choice + "Please try again\n");
+                    System.out.println("Invalid menu choice: " + choice + " Please try again\n");
                     break;
             }
 
-            // Clear stream buffer
-            sc.nextLine();
 
             // Prompt if you want to continue using the menu
             if (menuContinue) {
@@ -100,6 +101,7 @@ public class UserInterface {
                 System.out.println(l);
             }
         }
+
     }
 
 }
