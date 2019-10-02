@@ -39,10 +39,10 @@ public class FileUpdater {
         String userInput = input.nextLine();
 
         String formattedContact = "";
-        long phoneNumber = 0;
+        String phoneNumber = "";
 
-        if(userInput.matches(".*\\d.*")){
-            phoneNumber = Long.parseLong(userInput);
+        if((userInput.matches(".*\\d.*")) && (userInput.length() == 7 || userInput.length() == 10)){
+            phoneNumber = formatNumber(userInput);
         } else {
             System.out.println("That isn't a phone number");
             UserInterface.menu();
@@ -111,6 +111,14 @@ public class FileUpdater {
             }
         }
 
+    }
+
+    private static String formatNumber(String rawNumber){
+        if(rawNumber.length() == 7){
+            return rawNumber.substring(0, 3) + "-" + rawNumber.substring(3);
+        }else {
+            return rawNumber.substring(0, 3) + "-" + rawNumber.substring(3, 6) + "-" + rawNumber.substring(6);
+        }
     }
 
 }
