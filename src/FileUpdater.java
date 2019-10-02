@@ -83,7 +83,7 @@ public class FileUpdater {
             }
         }
 
-        System.out.println("\nAre you sure you want to delete this contact? ");
+        System.out.println("\nAre you sure you want to delete this contact(s)?");
         String confirm = input.nextLine();
 
         if (confirm.equalsIgnoreCase("yes") || confirm.equalsIgnoreCase("y")) {
