@@ -1,3 +1,5 @@
+import java.io.File;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -24,7 +26,7 @@ public class UserInterface {
             // Perform action based on choice
             switch (choice) {
                 case 1:
-                    System.out.println("view contacts");
+                    viewContacts();
                     break;
                 case 2:
                     System.out.println("Add a new contact");
@@ -62,6 +64,18 @@ public class UserInterface {
 
     }
 
+    // View contacts in file.
+    protected static void viewContacts() {
+        List<String> list = FileUpdater.readData();
 
+        System.out.println("\nName                 | Phone Number ");
+        System.out.println("-----------------------------------");
+
+        for(String l : list) {
+            System.out.println(l);
+        }
+
+        System.out.println("");
+    }
 
 }
