@@ -30,10 +30,21 @@ public class FileUpdater {
     }
 
     protected static void addNewContact(){
+        Scanner sc = new Scanner(System.in);
         List<String> lines = readData();
 
         System.out.println("Add contacts first and last name.");
         String newName = input.nextLine();
+        for(String l : lines){
+            if(l.toLowerCase().contains(newName.toLowerCase())){
+                System.out.println("That contact already exists. Add anyway? Y/N");
+                String addAnyway = sc.nextLine();
+                if (addAnyway.equalsIgnoreCase("no") || addAnyway.equalsIgnoreCase("n")) {
+                    System.out.println("Goodbye.");
+                    return;
+                }
+            }
+        }
 
         System.out.format("What is %s's phone number?\n", newName);
         String userInput = input.nextLine();
