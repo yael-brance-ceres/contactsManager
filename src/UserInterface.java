@@ -21,7 +21,17 @@ public class UserInterface {
             System.out.println("Enter an option (1, 2, 3, 4, or 5):");
 
             // Take in user choice.
-            Integer choice = sc.nextInt();
+            int choice = 0;
+
+            String userInput = sc.nextLine();
+
+            if(userInput.matches(".*\\d.*")){
+                choice = Integer.parseInt(userInput);
+            } else {
+                System.out.println("That isn't a valid choice.");
+                menu();
+            }
+
 
             // Perform action based on choice
             switch (choice) {
@@ -29,10 +39,10 @@ public class UserInterface {
                     viewContacts();
                     break;
                 case 2:
-                    System.out.println("Add a new contact");
+                    FileUpdater.addNewContact();
                     break;
                 case 3:
-                    System.out.println("Search a contact by name");
+                    searchContacts();
                     break;
                 case 4:
                     System.out.println("Delete an existing contact");
@@ -76,6 +86,20 @@ public class UserInterface {
         }
 
         System.out.println("");
+    }
+
+    protected static void searchContacts(){
+        System.out.println("Enter contact's name");
+        String fullName = sc.nextLine();
+        List<String> lines = FileUpdater.readData();
+        System.out.println("\nName                 | Phone Number ");
+        System.out.println("-----------------------------------");
+
+        for(String l : lines){
+            if(l.toLowerCase().contains(fullName.toLowerCase())){
+                System.out.println(l);
+            }
+        }
     }
 
 }
